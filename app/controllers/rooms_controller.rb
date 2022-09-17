@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: %i[show]
+  # before action sets room id in my params but only for the "show" and "edit" methods I've implemented below
+  before_action :set_room, only: %i[show edit update]
   def index
     @rooms = Room.all
   end
@@ -26,6 +27,19 @@ class RoomsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
+  def update
+    respond_to do |format|
+      if @room.update(room_params)
+        format.html { redirect_to room_url(@room), notice: "Room was successfully updated" }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # private callback action to call at top of class so set current room value
   private

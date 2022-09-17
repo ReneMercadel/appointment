@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   # before action sets room id in my params but only for the "show" and "edit" methods I've implemented below
-  before_action :set_room, only: %i[show edit update]
+  before_action :set_room, only: %i[show edit update destroy]
   def index
     @rooms = Room.all
   end
@@ -40,6 +40,14 @@ class RoomsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @room.destroy
+    respond_to do |format|
+      format.html { redirect_to rooms_url, notice: "Room was successfully deleted" }
+    end
+  end
+
 
   # private callback action to call at top of class so set current room value
   private
